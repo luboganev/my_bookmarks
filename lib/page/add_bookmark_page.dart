@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/bookmark.dart';
+import '../model/bookmark.dart';
 
 class AddBookmarkPage extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class _AddBookmarkPageState extends State<AddBookmarkPage> {
               autofocus: true,
               controller: _titleTextController,
               textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.text,
               onSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_linkFocusNode);
               },
@@ -47,6 +49,7 @@ class _AddBookmarkPageState extends State<AddBookmarkPage> {
               controller: _linkTextController,
               focusNode: _linkFocusNode,
               textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.url,
               decoration: InputDecoration(
                   icon: Icon(Icons.link),
                   labelText: "Link",
@@ -56,10 +59,22 @@ class _AddBookmarkPageState extends State<AddBookmarkPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
-        onPressed: () {},
+      floatingActionButton: Builder(
+        builder: (BuildContext context) => FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            String title = _titleTextController.text;
+            String link = _linkTextController.text;
+
+            Scaffold.of(context).hideCurrentSnackBar();
+            if (isValidInput(title, link)) {
+              Navigator.pop(context, Bookmark(title, link));
+            } else {
+              showInputError(context, title, link);
+            }
+          },
+        ),
       ),
     );
   }
@@ -70,5 +85,23 @@ class _AddBookmarkPageState extends State<AddBookmarkPage> {
     _linkTextController.dispose();
     _linkFocusNode.dispose();
     super.dispose();
+  }
+
+  bool isValidInput(String title, String link) {
+    return title.isNotEmpty && link.isNotEmpty;
+  }
+
+  void showInputError(BuildContext context, String title, String link) {
+    if (title.isEmpty) {
+      showSnackBar(context, "You need to add a title.");
+    } else if (link.isEmpty) {
+      showSnackBar(context, "You need to add a link.");
+    }
+  }
+
+  void showSnackBar(BuildContext context, String message) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+    ));
   }
 }

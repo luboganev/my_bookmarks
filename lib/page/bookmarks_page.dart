@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import '../model/bookmark.dart';
 import '../util/navigation_util.dart';
 import '../model/bookmark.dart';
 import '../widget/bookmarks_list_widget.dart';
 
-class BookmarksPage extends StatelessWidget {
-  List<Bookmark> bookmarksList = [
-    Bookmark("Flutter", "https://flutter.dev"),
-    Bookmark("Google", "https://google.com"),
-  ];
+class BookmarksPage extends StatefulWidget {
+  @override
+  _BookmarksPageState createState() => _BookmarksPageState();
+}
+
+class _BookmarksPageState extends State<BookmarksPage> {
+  List<Bookmark> bookmarksList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +23,17 @@ class BookmarksPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.add),
         label: Text("Add"),
-        onPressed: () => navigateToAddBookmarksPage(context),
+        onPressed: () => onAddButtonPressed(context),
       ),
     );
+  }
+
+  void onAddButtonPressed(BuildContext context) async {
+    final result = await navigateToAddBookmarksPage(context);
+    if (result != null && result is Bookmark) {
+      setState(() {
+        bookmarksList.add(result);
+      });
+    }
   }
 }
