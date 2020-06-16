@@ -1,6 +1,5 @@
-import 'package:my_bookmarks/page/view_bookmark_page.dart';
-import 'package:my_bookmarks/util/navigation_util.dart';
 import 'package:flutter/material.dart';
+import 'package:my_bookmarks/util/navigation_util.dart';
 
 import '../model/bookmark.dart';
 
