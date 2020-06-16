@@ -31,6 +31,10 @@ class BookmarkGridItemWidget extends StatelessWidget {
                 bookmark.link,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
+              SizedBox(
+                height: 8,
+              ),
+              Hero(tag: bookmark.link, child: Icon(Icons.star, size: 40.0)),
             ],
           ),
         ),

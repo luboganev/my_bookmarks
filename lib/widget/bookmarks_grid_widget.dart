@@ -18,7 +18,7 @@ class BookmarksGridWidget extends StatelessWidget {
           return BookmarkGridItemWidget(bookmarksList[index]);
         },
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 2.0,
+          childAspectRatio: 1,
           crossAxisCount: 2,
           crossAxisSpacing: 8,
         ),

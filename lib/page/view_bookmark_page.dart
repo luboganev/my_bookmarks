@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_bookmarks/widget/view_webpage_widget.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../model/bookmark.dart';
 
@@ -14,6 +13,15 @@ class ViewBookmarkPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(bookmark.title),
+        actions: <Widget>[
+          Hero(
+            tag: bookmark.link,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.star),
+            ),
+          )
+        ],
       ),
       body: ViewWebPageWidget(bookmark.link),
     );
